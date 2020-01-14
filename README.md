@@ -1,8 +1,8 @@
-zPooling
+#zPooling
 
-Simplistic, code-driven and optimized solution for any scale of pooling! Pool everything!
+##Simplistic, code-driven and optimized solution for any scale of pooling! Pool everything!
 
-How to use and why?
+##How to use and why?
          Instead of constantly Instantiate-ing new objects from the prefab (it is very costly operation) and Destroying them afterterwards (which is as well), available instances of the objects are re-used.
          This pooling implementation provides more of a programming approach to the pooling, instead of e.g. relying to setting instances manually inside the editor or scenes.
 
@@ -28,9 +28,9 @@ entity class .OnDestroy() must be implemented. In it, this.RemoveFromPool() / th
 Entity pool size is managed automatically, and doesn't require anything else. But in case where a lots of objects has to be instantiated, it is wise use a PoolingExt.SustainPool / PoolingExt.SustainAutoPool
 to prepare enough instances of the prefabs.
 
-For more specific details, feel free to refer the source code, as it is well documented (e.g. PoolingExt for the available extension pooling methods)
+##For more specific details, feel free to refer the source code, as it is well documented (e.g. PoolingExt for the available extension pooling methods)
 		
-Compatibility: Compatible with Unity versions that support .Net 4.0, but with a bit of coding tweaks, can be adopted to the earlier scripting backend versions as well.
+##Compatibility: Compatible with Unity versions that support .Net 4.0, but with a bit of coding tweaks, can be adopted to the earlier scripting backend versions as well.
 
-Suggestions or questions? Ask them at the issue section, or find me at Unity forum @xVergilx
+##Suggestions or questions? Ask them at the issue section, or find me at Unity forum @xVergilx
 Feel free to fork and modify, license is MIT.
