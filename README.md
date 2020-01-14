@@ -1,12 +1,16 @@
 # zPooling
 
-## Simplistic, code-driven and optimized solution for any scale of pooling! Pool everything!
+## Simplistic, code-driven and optimized solution for any scale of pooling! 
+## Pool everything without limits!
+
+#### It will not work without implementing an interface. If you're a designer or non-programmer looking for non-coding pooling, seek Asset Store, there's plenty of them there
 
 #### How to use and why?
-   Instead of constantly Instantiate-ing new objects from the prefab (it is very costly operation) and Destroying them afterterwards (which is as well), available instances of the objects are re-used.
-   This pooling implementation provides more of a programming approach to the pooling, instead of e.g. relying to setting instances manually inside the editor or scenes.
+   Instead of constantly .Instantiate()-ing new objects from the prefab (it is very costly operation) and .Destroy()-ing them afterterwards (which is as well), available instances of the objects are re-used.
+   
+   This pooling implementation provides more of a code-driven approach to the pooling, instead of e.g. relying to setting instances manually inside the editor or scenes. This provides way more flexibility, because it allows to write custom logic on spawn / despawn of objects at minimal performance costs.
 
-But, to use pooling, you must have a GenericPooler and AutoPooler setup in the scene.
+But, to use pooling, you must have a GenericPooler and (optionally) AutoPooler setup in the scene.
 Objects to be pooled must implement IGenericPoolElement interface, that sets up initial contract.
           
 To instantiate an object from the pool, use:
