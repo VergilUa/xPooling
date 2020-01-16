@@ -15,8 +15,11 @@ But, to use pooling, you must have a **GenericPooler** and (optionally) **AutoPo
 Objects to be pooled must implement IGenericPoolElement interface, that sets up initial contract.
           
 **To instantiate an object from the pool, use:**
-      → .Pool<T> (to manage entities lifecycle manually) or
+
+      → .Pool<T> (to manage entities lifecycle manually) 
+	or
       → .AutoPool<T> (to manage entities lifecycle automatically, and entity will return to the pool automatially once IsAvailable becomes true)
+      
       extension method on the GameObject prefab. Pool will automatically retrieve either older an instance that is available in the pool, or will internally setup a new pool (in case its not set up yet),
 instantiate a new instance of the prefab and grab an entity from it.
 
