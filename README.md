@@ -42,11 +42,14 @@ Entity pool size is managed automatically, and doesn't require anything else.
 But in case where a lots of objects has to be instantiated, it is wise use **PoolingExt.SustainPool** / **PoolingExt.SustainAutoPool**
 to prepare enough instances of the prefabs.
 
+
 #### For more specific details, feel free to refer the source code, as it is well documented 
 (e.g. PoolingExt for the available extension pooling methods)
 		
+	
 #### Compatibility: Compatible with Unity versions that support .Net 4.0
 (but with a bit of coding tweaks, can be adopted to the earlier scripting backend versions as well)
+
 
 #### Suggestions or questions? Ask them at the issue section, or find me at Unity forum @xVergilx
 Feel free to fork and modify, license is MIT.
