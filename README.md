@@ -7,28 +7,19 @@
 ### If you're a designer or non-programmer looking for non-coding pooling, seek Asset Store, there's plenty of those there
 
 #### How to use and why?
-   Instead of constantly **.Instantiate()**-ing new objects from the prefab (it is very costly operation) and 
-   **.Destroy()**-ing them afterterwards (which is as well), available instances of the objects are re-used.
+Instead of constantly **.Instantiate()**-ing new objects from the prefab (it is very costly operation) and 
+**.Destroy()**-ing them afterterwards (which is as well), available instances of the objects are re-used.
    
-   This pooling implementation provides more of a code-driven approach to the pooling, instead of e.g. 
-   relying to setting instances manually inside the editor or scenes. 
+This pooling implementation provides more of a code-driven approach to the pooling, instead of e.g. 
+relying to setting instances manually inside the editor or scenes. 
    
-   This provides way more flexibility, because it allows to write custom logic on spawn / despawn of objects 
-   at minimal performance overhead costs.
+This provides way more flexibility, because it allows to write custom logic on spawn / despawn of objects at minimal performance overhead costs.
 
 But, to use pooling, you must have a **GenericPooler** and (optionally) **AutoPooler** setup in the scene.
 Objects to be pooled must implement IGenericPoolElement interface, that sets up initial contract.
           
 **To instantiate an object from the pool, use:**
-
-   .Pool<T> (to manage entities lifecycle manually) 
-      or
-   .AutoPool<T> 
-	(to manage entities lifecycle automatically, entity will return to the pool automatially once IsAvailable becomes true. 
-	This is also less optimal, but unavoidable in some cases. 
-	E.g. AudioSources)
-     
-   **extension method on the GameObject prefab**. 
+  .Pool<T> (to manage entities lifecycle manually) or .AutoPool<T> (to manage entities lifecycle automatically, entity will return to the pool automatially once IsAvailable becomes true. This is also less optimal, but unavoidable in some cases. E.g. AudioSources) extension method on the GameObject prefab. 
 
 Pool will automatically retrieve either older an instance that is available in the pool, or will internally setup a new pool 
 (in case its not set up yet), instantiate a new instance of the prefab and grab an entity from it.
