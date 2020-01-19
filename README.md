@@ -51,5 +51,5 @@ to prepare enough instances of the prefabs.
 (but with a bit of coding tweaks, can be adopted to the earlier scripting backend versions as well)
 
 
-#### Suggestions or questions? Ask them at the issue section, or find me at Unity forum @xVergilx
+#### Suggestions or questions? Ask them at the issue section [here](https://github.com/VergilUa/zPooling/issues), or at [Unity forum](https://forum.unity.com/threads/free-zpooling-code-driven-pooling-framework.812145/)
 Feel free to fork and modify, license is MIT.
