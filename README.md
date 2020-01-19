@@ -4,7 +4,7 @@
 ## Pool everything without limits!
 
 ### It will not work without implementing an interface. 
-### If you're a designer or non-programmer looking for non-coding pooling, seek Asset Store, there's plenty of those there
+### So if you're a non-programmer looking for non-coding pooling, seek Asset Store, there's plenty of those there
 
 #### How to use and why?
 Instead of constantly **.Instantiate()**-ing new objects from the prefab (it is very costly operation) and 
