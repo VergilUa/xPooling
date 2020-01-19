@@ -6,8 +6,8 @@
 ### Important:: It will not work without extra scripting involved 
 
 #### How to use and why?
-Instead of constantly **.Instantiate()**-ing new objects from the prefab (it is very costly operation) and 
-**.Destroy()**-ing them afterterwards (which is as well), available instances of the objects are re-used.
+Instead of constantly **Instantiate()**-ing new objects from the prefab (it is very costly operation) and 
+**Destroy()**-ing them afterterwards (which is as well), available instances of the objects are re-used.
    
 This pooling implementation provides more of a code-driven approach to the pooling, instead of e.g. 
 relying to setting instances manually inside the editor or scenes. 
@@ -15,7 +15,7 @@ relying to setting instances manually inside the editor or scenes.
 This provides way more flexibility, because it allows to write custom logic on spawn / despawn of objects at minimal performance overhead costs.
 
 But, to use pooling, you must have a **GenericPooler** and (optionally) **AutoPooler** setup in the scene.
-Objects to be pooled must implement IGenericPoolElement interface, that sets up initial contract.
+Objects to be pooled must implement IGenericPoolElement interface, that sets up initial contract (interface).
           
 **To instantiate an object from the pool, use:**
   .Pool<T> (to manage entities lifecycle manually) or .AutoPool<T> (to manage entities lifecycle automatically, entity will return to the pool automatially once IsAvailable becomes true. This is also less optimal, but unavoidable in some cases. E.g. AudioSources) extension method on the GameObject prefab. 
