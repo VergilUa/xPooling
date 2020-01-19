@@ -37,7 +37,7 @@ namespace Pooling {
       public int AvailableElementsCount => AvailableElements.Count;
       public bool HasInUseElements => InUseElements.Count > 0;
       
-#if UNITY_EDITOR
+#if UNITY_EDITOR && DEBUG_ZPOOLING
       public int TotalSpawned; // Keep incremental number of spawned entities for tracking names
 #endif
 
@@ -56,7 +56,14 @@ namespace Pooling {
       /// </summary>
       /// <returns>Activated component</returns>
       public T PoolFirst<T>() where T : MonoBehaviour {
-         IGenericPoolElement element = AvailableElements.First();
+         IGenericPoolElement element = null;
+         
+         // Grab first // LINQ -> Allocates
+         foreach (IGenericPoolElement ele in AvailableElements) {
+            element = ele;
+            break;
+         }
+         
          AvailableElements.Remove(element);
          InUseElements.Add(element);
 

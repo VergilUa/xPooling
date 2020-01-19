@@ -23,7 +23,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Pooling {
-   // Copyright 2017, Anton Rudenok a.k.a Vergil
    /// <summary>
    /// Class manager for all Generic Pooling procedures.
    /// </summary>
@@ -272,7 +271,7 @@ namespace Pooling {
       /// <returns>Instantiated object of prefab</returns>
       protected virtual T UnityInstantiate<T>(GenericPool pool) where T : MonoBehaviour {
          GameObject pooledObject = Instantiate(pool.Prefab, pool.Parent);
-#if UNITY_EDITOR
+#if UNITY_EDITOR && DEBUG_ZPOOLING
          pooledObject.name = pool.Prefab.name + " " + pool.TotalSpawned;
          pool.TotalSpawned++;
 #endif
@@ -357,10 +356,13 @@ namespace Pooling {
       public void ReturnToPool(IGenericPoolElement element) {
          HashReference.TryGetValue(element.PoolRef, out GenericPool genericPool);
 
-         Debug.Assert(genericPool != null,
-                      $"GenericPooler Pool ReUse() call failed on {element.gameObject}. "
-                      + "Make sure you're using correct poolHashRef to the correct pool (*.Instance mismatch?)",
-                      element.gameObject);
+#if DEBUG
+         if (genericPool == null) {
+            Debug.LogError($"GenericPooler Pool ReUse() call failed on {element.gameObject}. "
+                           + "Make sure you're using correct poolHashRef to the correct pool (*.Instance mismatch?)",
+                           element.gameObject);
+         }
+#endif
 
          Transform genericObjTrm = element.transform;
          Transform genericPoolParent = genericPool.Parent;
