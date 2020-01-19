@@ -3,7 +3,7 @@
 ## Simplistic, code-driven and optimized solution for any scale of pooling! 
 ## Pool everything without limits!
 
-### Important:: It will not work without extra scripting involved. So if you're a non-programmer looking for non-coding pooling, seek Asset Store, there's plenty of those there
+### Important:: It will not work without extra scripting involved 
 
 #### How to use and why?
 Instead of constantly **.Instantiate()**-ing new objects from the prefab (it is very costly operation) and 
