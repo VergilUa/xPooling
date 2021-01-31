@@ -16,8 +16,11 @@ public class RainElement : MonoBehaviour, IGenericPoolElement {
    [SerializeField]
    private Transform _transform = default;
 
-
    private void FixedUpdate() { _transform.position += _movementSpeed * _movementDirection; }
+
+   public void SetPosition(Vector3 pos) {
+      _transform.position = pos;
+   }
 
    #region [IGenericPoolElement implementation]
    

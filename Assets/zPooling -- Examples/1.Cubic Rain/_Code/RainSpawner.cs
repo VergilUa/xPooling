@@ -58,13 +58,12 @@ public class RainSpawner : MonoBehaviour {
    }
 
    private void DoSpawn() {
-      Vector3 spawnPos = RandomSpawnPos;
-
       // Use .Pool instead of Instantiate on the prefab
       // if extension is missing don't forget to include "using Pooling"
 
       // element can be further be used like so
-      RainElement element = _rainElementPrefab.Pool<RainElement>(spawnPos);
+      RainElement element = _rainElementPrefab.Pool<RainElement>();
+      element.SetPosition(RandomSpawnPos);
 
       // .Pool can also receive lots of other parameters, check PoolingExt.cs for more examples, e.g.
       // _rainElementPrefab.Pool<RainElement>(spawnPos, spawnRot);

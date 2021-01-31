@@ -21,6 +21,9 @@
 */
 using System.Collections.Generic;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace Pooling {
    /// <summary>
@@ -49,6 +52,14 @@ namespace Pooling {
       /// </summary>
       /// <param name="prefab">GameObject prefab</param>
       private T TakeFromPool<T>(GameObject prefab) where T : MonoBehaviour, IGenericPoolElement {
+#if UNITY_EDITOR
+         if (!Application.isPlaying) {
+            GameObject go = PrefabUtility.InstantiatePrefab(prefab) as GameObject;
+            go.TryGetComponent(out T component);
+            
+            return component;
+         }
+#endif
          if (!PoolerLibrary.TryGetValue(prefab, out GenericPool manipulatedPool)) {
             manipulatedPool = InstantiatePool(prefab);
          }
@@ -69,9 +80,6 @@ namespace Pooling {
          return returnedObject;
       }
 
-      // Multiple methods overloads are created to improve performance. It's not necessary, but nice to have
-      // -- Vergil
-
       /// <summary>
       /// Instantiates object using pooling technique
       /// </summary>
@@ -79,171 +87,19 @@ namespace Pooling {
       public virtual T InstantiateFromPool<T>(GameObject prefab) where T : MonoBehaviour, IGenericPoolElement {
          T returnedObject = TakeFromPool<T>(prefab);
 
-         returnedObject.Commission();
          returnedObject.IsCommissioned = true;
-
-         return returnedObject;
-      }
-
-      // Multiple methods overloads are created to improve performance. It's not necessary, but nice to have
-      // -- Vergil
-
-      /// <summary>
-      /// Instantiates object using pooling technique
-      /// </summary>
-      /// <param name="prefab">GameObject prefab</param>
-      /// <param name="position">Position where it should be instantiated</param>
-      public virtual T InstantiateFromPool<T>(GameObject prefab, Vector3 position)
-         where T : MonoBehaviour, IGenericPoolElement {
-         T returnedObject = TakeFromPool<T>(prefab);
-         returnedObject.transform.position = position;
-
          returnedObject.Commission();
-         returnedObject.IsCommissioned = true;
-         return returnedObject;
-      }
-
-      /// <summary>
-      /// Instantiates object using pooling technique
-      /// </summary>
-      /// <param name="prefab">GameObject prefab</param>
-      /// <param name="rotation">Rotation of instantiated transform</param>
-      public virtual T InstantiateFromPool<T>(GameObject prefab, Quaternion rotation)
-         where T : MonoBehaviour, IGenericPoolElement {
-         T returnedObject = TakeFromPool<T>(prefab);
-         returnedObject.transform.rotation = rotation;
-
-         returnedObject.Commission();
-         returnedObject.IsCommissioned = true;
-         return returnedObject;
-      }
-
-      /// <summary>
-      /// Instantiates object using pooling technique
-      /// </summary>
-      /// <param name="prefab">GameObject prefab</param>
-      /// <param name="position">Position where it should be instantiated</param>
-      /// <param name="rotation">Rotation of instantiated transform</param>
-      public virtual T InstantiateFromPool<T>(GameObject prefab, Vector3 position, Quaternion rotation)
-         where T : MonoBehaviour, IGenericPoolElement {
-         T returnedObject = TakeFromPool<T>(prefab);
-         returnedObject.transform.SetPositionAndRotation(position, rotation);
-
-         returnedObject.Commission();
-         returnedObject.IsCommissioned = true;
-
-         return returnedObject;
-      }
-
-      /// <summary>
-      /// Instantiates object using pooling technique
-      /// </summary>
-      /// <param name="prefab">GameObject prefab</param>
-      /// <param name="parent">Optional parent object</param>
-      /// <param name="worldPositionStays">Optional worldPositionStays for internal SetParent call</param>
-      public virtual T InstantiateFromPool<T>(GameObject prefab, Transform parent, bool worldPositionStays = true)
-         where T : MonoBehaviour, IGenericPoolElement {
-         T returnedObject = TakeFromPool<T>(prefab);
-         returnedObject.transform.SetParent(parent, worldPositionStays);
-
-         returnedObject.Commission();
-         returnedObject.IsCommissioned = true;
-
-         return returnedObject;
-      }
-
-      /// <summary>
-      /// Instantiates object using pooling technique
-      /// </summary>
-      /// <param name="prefab">GameObject prefab</param>
-      /// <param name="position">Position where it should be instantiated</param>
-      /// <param name="rotation">Rotation of instantiated transform</param>
-      /// <param name="parent">Optional parent object</param>
-      /// <param name="worldPositionStays">Optional worldPositionStays for internal SetParent call</param>
-      /// <returns>Instantiated object</returns>
-      public virtual T InstantiateFromPool<T>(GameObject prefab,
-                                              Vector3 position,
-                                              Quaternion rotation,
-                                              Transform parent,
-                                              bool worldPositionStays = true)
-         where T : MonoBehaviour, IGenericPoolElement {
-         T returnedObject = TakeFromPool<T>(prefab);
-
-         Transform trm = returnedObject.transform;
-         trm.SetParent(parent, worldPositionStays);
-         returnedObject.transform.SetPositionAndRotation(position, rotation);
-
-         returnedObject.Commission();
-         returnedObject.IsCommissioned = true;
-
-         return returnedObject;
-      }
-
-      /// <summary>
-      /// Instantiates object using pooling technique
-      /// </summary>
-      /// <param name="prefab">GameObject prefab</param>
-      /// <param name="position">Position where it should be instantiated</param>
-      /// <param name="parent">Optional parent object</param>
-      /// <param name="worldPositionStays">Optional worldPositionStays for internal SetParent call</param>
-      /// <returns>Instantiated object</returns>
-      public virtual T InstantiateFromPool<T>(GameObject prefab,
-                                              Vector3 position,
-                                              Transform parent,
-                                              bool worldPositionStays = true)
-         where T : MonoBehaviour, IGenericPoolElement {
-         T returnedObject = TakeFromPool<T>(prefab);
-
-         Transform trm = returnedObject.transform;
-         trm.SetParent(parent, worldPositionStays);
-         trm.position = position;
-
-         returnedObject.Commission();
-         returnedObject.IsCommissioned = true;
-
-         return returnedObject;
-      }
-
-      /// <summary>
-      /// Instantiates object using pooling technique
-      /// </summary>
-      /// <param name="prefab">GameObject prefab</param>
-      /// <param name="rotation">Rotation of instantiated transform</param>
-      /// <param name="parent">Optional parent object</param>
-      /// <param name="worldPositionStays">Optional worldPositionStays for internal SetParent call</param>
-      /// <returns>Instantiated object</returns>
-      public virtual T InstantiateFromPool<T>(GameObject prefab,
-                                              Quaternion rotation,
-                                              Transform parent,
-                                              bool worldPositionStays = true)
-         where T : MonoBehaviour, IGenericPoolElement {
-         T returnedObject = TakeFromPool<T>(prefab);
-
-         Transform trm = returnedObject.transform;
-         trm.SetParent(parent, worldPositionStays);
-         trm.rotation = rotation;
-
-         returnedObject.Commission();
-         returnedObject.IsCommissioned = true;
 
          return returnedObject;
       }
 
       #endregion
-
+      
       /// <summary>
       /// Instantiates an actual pool object to contain data about the pool
       /// </summary>
       protected GenericPool InstantiatePool(GameObject prefab) {
          GenericPool pool = new GenericPool {Prefab = prefab};
-
-         GameObject poolParentGO = new GameObject();
-#if UNITY_EDITOR
-         poolParentGO.name = prefab.name + " (Elements)";
-#endif
-         Transform poolParentTrm = poolParentGO.transform;
-         poolParentTrm.SetParent(transform);
-         pool.Parent = poolParentTrm;
 
          PoolerLibrary.Add(prefab, pool);
          HashReference.Add(pool.GetHashCode(), pool);
@@ -253,8 +109,6 @@ namespace Pooling {
       /// <summary>
       /// Obtains available element or instantiates a new one
       /// </summary>
-      /// <param name="pool"></param>
-      /// <returns></returns>
       protected virtual T ObtainElement<T>(GenericPool pool) where T : MonoBehaviour {
          if (pool.HasAvailableElements) {
             return pool.PoolFirst<T>();
@@ -270,31 +124,25 @@ namespace Pooling {
       /// </summary>
       /// <returns>Instantiated object of prefab</returns>
       protected virtual T UnityInstantiate<T>(GenericPool pool) where T : MonoBehaviour {
-         GameObject pooledObject = Instantiate(pool.Prefab, pool.Parent);
+         GameObject pooledObject = Instantiate(pool.Prefab);
 #if UNITY_EDITOR && DEBUG_ZPOOLING
          pooledObject.name = pool.Prefab.name + " " + pool.TotalSpawned;
          pool.TotalSpawned++;
 #endif
-         if (pooledObject != null) {
-            // Adding to the pool as instance of generic pool element
-            IGenericPoolElement element = pooledObject.GetComponent<IGenericPoolElement>()
-                                          ?? pooledObject.GetComponentInChildren<IGenericPoolElement>();
-            if (element != null) {
-               pool.AddToPool(element);
-               OnUnityInstantiatePostProcess(element);
-            }
-#if DEBUG
-            else {
-               Debug.LogError("Unable to find component ("
-                              + typeof(T)
-                              + ") on generic pool element instance - "
-                              + pooledObject);
-            }
-#endif
-            return pooledObject.GetComponent<T>();
+         // Adding to the pool as instance of generic pool element
+         if (pooledObject.TryGetComponent(out IGenericPoolElement element)) {
+            pool.AddToPool(element);
+            OnUnityInstantiatePostProcess(element);
          }
-
-         return null;
+#if DEBUG
+         else {
+            Debug.LogError("Unable to find component ("
+                           + typeof(T)
+                           + ") on generic pool element instance - "
+                           + pooledObject);
+         }
+#endif
+         return element as T;
       }
 
       /// <summary>
@@ -331,7 +179,7 @@ namespace Pooling {
       /// <summary>
       /// Spawns N of objects and decommissions them for future use
       /// </summary>
-      private void InitializeObjects(GameObject prefab, int objCount, Vector3 prewarmPos, bool isAuto) {
+      public void InitializeObjects(GameObject prefab, int objCount, Vector3 prewarmPos, bool isAuto) {
          if (!PoolerLibrary.TryGetValue(prefab, out GenericPool manipulatedPool)) {
             manipulatedPool = InstantiatePool(prefab);
          }
@@ -343,7 +191,8 @@ namespace Pooling {
 
             instance.transform.position = prewarmPos;
 
-            IGenericPoolElement element = instance.GetComponent<IGenericPoolElement>();
+            instance.TryGetComponent(out IGenericPoolElement element);
+            element.IsCommissioned = false;
             element.UsesAutoPool = isAuto;
             element.PoolRef = hash;
             element.ReturnToPool();
@@ -364,10 +213,6 @@ namespace Pooling {
          }
 #endif
 
-         Transform genericObjTrm = element.transform;
-         Transform genericPoolParent = genericPool.Parent;
-         genericObjTrm.SetParent(genericPoolParent);
-
          genericPool.ReturnToPool(element);
       }
 
@@ -387,6 +232,14 @@ namespace Pooling {
          foreach (GenericPool pool in PoolerLibrary.Values) {
             pool.ForceDecommissionAll();
          }
+      }
+      
+      public int GetTotalObjectCount(GameObject prefab) {
+         if (!PoolerLibrary.TryGetValue(prefab, out GenericPool pool)){
+            return 0;
+         }
+
+         return pool.GetTotalObjectCount();
       }
    }
 }

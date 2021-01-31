@@ -20,7 +20,6 @@
    SOFTWARE.
 */
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace Pooling {
@@ -28,7 +27,6 @@ namespace Pooling {
    /// Generic pool for base pool operations
    /// </summary>
    public class GenericPool {
-      public Transform Parent;
       public GameObject Prefab;
 
       #region [Properties]
@@ -57,24 +55,15 @@ namespace Pooling {
       /// <returns>Activated component</returns>
       public T PoolFirst<T>() where T : MonoBehaviour {
          IGenericPoolElement element = null;
-         
-         // Grab first // LINQ -> Allocates
-         foreach (IGenericPoolElement ele in AvailableElements) {
-            element = ele;
+
+         // Get first, .First Allocates 32b
+         foreach (IGenericPoolElement el in AvailableElements) {
+            element = el;
             break;
          }
          
          AvailableElements.Remove(element);
          InUseElements.Add(element);
-
-         if (element == null) {
-#if DEBUG
-            Debug.LogError("GenericPooler "
-                           + typeof(T)
-                           + ":: PoolFirst() - Something went wrong, non IGenericPoolElement in the AvailableElements");
-#endif
-            return default;
-         }
 
          return element as T;
       }
@@ -137,6 +126,10 @@ namespace Pooling {
          }
 
          InUseElements.Clear();
+      }
+      
+      public int GetTotalObjectCount() {
+         return AvailableElements.Count + InUseElements.Count;
       }
    }
 }
