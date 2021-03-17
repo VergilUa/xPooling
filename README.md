@@ -19,9 +19,9 @@ Objects to be pooled must implement **IGenericPoolElement** interface, that sets
 
 Remark: "Entity" in manual is some MonoBehaviour that implements IGenericPoolElement interface and have some logic;  
 (not an actual Entity from Entities package / ECS)
-          
-**To instantiate an object from the pool, use extension methods on prefab:**
-  
+
+
+**To instantiate an object from the pool, use extension methods on prefab:**  
 ```T instance = *gameObjectPrefab*.Pool<T>()``` (to manage entities lifecycle manually)  
 ------------------------- or  --------------------------------  
 ```T instance = *gameObjectPrefab*.AutoPool<T>()``` (to manage entities lifecycle automatically)  
@@ -68,8 +68,8 @@ to prepare enough instances of the prefabs.
 
 
 **Other properties:**  
-**IsCommissioned** is set internally by the poolers before Commission or Decommission is called,  
-and can be used check whether entity was commissioned and not returned to the pool yet.
+**IsCommissioned** is set internally by the poolers before Commission or Decommission is called.  
+Can be used check whether entity was commissioned and not returned to the pool yet.
 
 **PoolRef** is internal id for objects pool, no need to set or modify it.
 
