@@ -6,10 +6,10 @@
 ### Important:: It will not work without extra scripting involved 
 
 #### How to use and why?
-Instead of constantly **Instantiate()**-ing new objects from the prefab and 
+Instead of constantly **Instantiate()**-ing new objects from the prefab and  
 **Destroy()**-ing them afterterwards (both are costly operations), available instances of the objects are re-used.
    
-This pooling implementation provides more of a code-driven approach to the pooling, instead of e.g. 
+This pooling implementation provides more of a code-driven approach to the pooling, instead of e.g.  
 relying to setting instances manually inside the editor or scenes. 
    
 This provides way more flexibility, because it allows to write custom logic on spawn / despawn of objects at minimal performance overhead costs.
@@ -17,33 +17,33 @@ This provides way more flexibility, because it allows to write custom logic on s
 But, to use pooling, you must have a **GenericPooler** and (optionally) **AutoPooler** setup in the scene.
 Objects to be pooled must implement **IGenericPoolElement** interface, that sets up initial contract (interface).
 
-Remark: "Entity" in manual is some MonoBehaviour that implements IGenericPoolElement interface and have some logic;
+Remark: "Entity" in manual is some MonoBehaviour that implements IGenericPoolElement interface and have some logic;  
 (not an actual Entity from Entities package / ECS)
           
 **To instantiate an object from the pool, use extension methods on prefab:**
   
-```T instance = *gameObjectPrefab*.Pool<T>()``` (to manage entities lifecycle manually) 
-                  or 
-```T instance = *gameObjectPrefab*.AutoPool<T>()``` (to manage entities lifecycle automatically)
+```T instance = *gameObjectPrefab*.Pool<T>()``` (to manage entities lifecycle manually)  
+------------------------- or  --------------------------------  
+```T instance = *gameObjectPrefab*.AutoPool<T>()``` (to manage entities lifecycle automatically)  
 Make sure your GameObject prefab has IGenericPoolElement MonoBehaviour attached to it.
-	
-Entity pooled with .AutoPool will return to the pool automatially once IsAvailable becomes true. 
-This is also less optimal, but unavoidable in some cases. E.g. for AudioSources or ParticleSystems;
-
-Both types of pools will automatically retrieve either older an instance that is available in the pool, or will internally setup a new pool 
-(in case its not set up yet), instantiate a new instance of the prefab and grab an entity **T** from it using **TryGetComponent**.
-
+  
+Entity pooled with .AutoPool will return to the pool automatially once IsAvailable becomes true.  
+This is also less optimal, but unavoidable in some cases. E.g. for AudioSources or ParticleSystems;  
+  
+Both types of pools will automatically retrieve either older an instance that is available in the pool, or will internally setup a new pool  
+(in case its not set up yet), instantiate a new instance of the prefab and grab an entity **T** from it using **TryGetComponent**.  
+  
 In both cases of .Pool / .AutoPool, **.Commission()** method is automatically called on the entity, allowing to reset / re-initialize state of the object.
-E.g.
+E.g.  
 ```
       public void Commission() => _gameObject.SetActive(true);
 ```
   
 Instead of doing **Destroy()** use **Decommission()** on the pooled entity. 
 This **.Decommission()** method can be used to reset the entities state before returning it back to the pool. 
-
+  
 **this.ReturnToPool()** extension method from within **.Decommission()** must be added, in order to return the object back to the pool correctly;
-
+  
 E.g. basic implementation could look like this:
 ```
       public void Decommission() {
@@ -51,25 +51,25 @@ E.g. basic implementation could look like this:
          this.ReturnToPool();
       }
 ```
-
+  
 Note that both .Commission() and .Decommision() can be used to change entity state to whatever is desired.
-
-Entities that are being destroyed (either by Unity, or by mistake) are still could be potentially be referenced within pooler. 
-So to prevent referencing entities that are already destroyed, inside entity class **.OnDestroy()** must be implemented. 
-
+  
+Entities that are being destroyed (either by Unity, or by mistake) are still could be potentially be referenced within pooler.  
+So to prevent referencing entities that are already destroyed, inside entity class **.OnDestroy()** must be implemented.  
+  
 In it, **this.RemoveFromPool()** must be called. E.g.
 ```
 public void OnDestroy() => this.RemoveFromPool();
 ```
 Entity pool size is managed automatically, and doesn't require anything else.
+  
+But in case where there's a lot of objects has to be instantiated, it is wise use **PoolingExt.SustainPool** / **PoolingExt.SustainAutoPool**  
+to prepare enough instances of the prefabs.  
 
-But in case where there's a lot of objects has to be instantiated, it is wise use **PoolingExt.SustainPool** / **PoolingExt.SustainAutoPool**
-to prepare enough instances of the prefabs.
 
-
-**Other properties:**
-**IsCommissioned** is set internally by the poolers before Commission or Decommission is called, and can be used check whether
-entity is 
+**Other properties:**  
+**IsCommissioned** is set internally by the poolers before Commission or Decommission is called,  
+and can be used check whether entity was commissioned and not returned to the pool yet.
 
 **PoolRef** is internal id for objects pool, no need to set or modify it.
 
