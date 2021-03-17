@@ -20,10 +20,15 @@ Objects to be pooled must implement **IGenericPoolElement** interface, that sets
 Remark: "Entity" in manual is some MonoBehaviour that implements IGenericPoolElement interface and have some logic;
 (not an actual Entity from Entities package / ECS)
           
-**To instantiate an object from the pool, use:**
-  ```T instance = gameObjectPrefab.Pool<T>()``` (to manage entities lifecycle manually) or ```T instance = *gameObjectPrefab*.AutoPool<T>()``` (to manage entities lifecycle automatically) extension method on the GameObject prefab. Make sure your GameObject prefab has IGenericPoolElement MonoBehaviour attached to it.
+**To instantiate an object from the pool, use extension methods on prefab:**
+  
+```T instance = *gameObjectPrefab*.Pool<T>()``` (to manage entities lifecycle manually) 
+                  or 
+```T instance = *gameObjectPrefab*.AutoPool<T>()``` (to manage entities lifecycle automatically)
+Make sure your GameObject prefab has IGenericPoolElement MonoBehaviour attached to it.
 	
-Entity pooled with .AutoPool will return to the pool automatially once IsAvailable becomes true. This is also less optimal, but unavoidable in some cases. E.g. AudioSources;
+Entity pooled with .AutoPool will return to the pool automatially once IsAvailable becomes true. 
+This is also less optimal, but unavoidable in some cases. E.g. for AudioSources or ParticleSystems;
 
 Both types of pools will automatically retrieve either older an instance that is available in the pool, or will internally setup a new pool 
 (in case its not set up yet), instantiate a new instance of the prefab and grab an entity **T** from it using **TryGetComponent**.
