@@ -6,8 +6,8 @@
 ### Important:: It will not work without extra scripting involved 
 
 #### How to use and why?
-Instead of constantly **Instantiate()**-ing new objects from the prefab (it is very costly operation) and 
-**Destroy()**-ing them afterterwards (which is as well), available instances of the objects are re-used.
+Instead of constantly **Instantiate()**-ing new objects from the prefab and 
+**Destroy()**-ing them afterterwards (both are costly operations), available instances of the objects are re-used.
    
 This pooling implementation provides more of a code-driven approach to the pooling, instead of e.g. 
 relying to setting instances manually inside the editor or scenes. 
@@ -21,7 +21,7 @@ Remark: "Entity" in manual is some MonoBehaviour that implements IGenericPoolEle
 (not an actual Entity from Entities package / ECS)
           
 **To instantiate an object from the pool, use:**
-  .Pool<T> (to manage entities lifecycle manually) or .AutoPool<T> (to manage entities lifecycle automatically) extension method on the GameObject prefab. Make sure your GameObject prefab has IGenericPoolElement MonoBehaviour attached to it.
+  ```T instance = gameObjectPrefab.Pool<T>()``` (to manage entities lifecycle manually) or ```T instance = *gameObjectPrefab*.AutoPool<T>()``` (to manage entities lifecycle automatically) extension method on the GameObject prefab. Make sure your GameObject prefab has IGenericPoolElement MonoBehaviour attached to it.
 	
 Entity pooled with .AutoPool will return to the pool automatially once IsAvailable becomes true. This is also less optimal, but unavoidable in some cases. E.g. AudioSources;
 
