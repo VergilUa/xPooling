@@ -1,4 +1,4 @@
-#                             zPooling
+#                             z(ero performace impact)Pooling
 
 ## Simplistic, code-driven and optimized solution for any scale of pooling! 
 ## Pool everything without limits!
