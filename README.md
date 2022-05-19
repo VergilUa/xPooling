@@ -1,4 +1,4 @@
-#                             z(ero performace impact) Pooling
+#                             xPooling
 
 ## Simplistic, code-driven and optimized solution for any scale of pooling! 
 ## Pool everything without limits!
@@ -79,7 +79,7 @@ public bool IsAvailable => false;
 
 **UsesAutoPool** is set automatically upon .Pool() / .AutoPool() call, and used internally to defer which pool should be used for **.ReturnToPool()** / **.RemoveFromPool()**.
 
-### Examples available @ zPooling -- Examples
+### Examples available @ xPooling -- Examples
 
 #### For more specific details, feel free to refer the source code, as it is well documented 
 (e.g. PoolingExt for the available extension pooling methods)
@@ -89,5 +89,5 @@ public bool IsAvailable => false;
 (but with a bit of coding tweaks, can be adopted to the earlier scripting backend versions as well)
 
 
-#### Suggestions or questions? Ask them at the issue section [here](https://github.com/VergilUa/zPooling/issues), or at [Unity forum](https://forum.unity.com/threads/free-zpooling-code-driven-pooling-framework.812145/)
+#### Suggestions or questions? Ask them at the issue section [here](https://github.com/VergilUa/xPooling/issues), or at [Unity forum](https://forum.unity.com/threads/free-zpooling-code-driven-pooling-framework.812145/)
 Feel free to fork and modify, license is MIT.
