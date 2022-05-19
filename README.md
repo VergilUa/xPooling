@@ -89,5 +89,5 @@ public bool IsAvailable => false;
 (but with a bit of coding tweaks, can be adopted to the earlier scripting backend versions as well)
 
 
-#### Suggestions or questions? Ask them at the issue section [here](https://github.com/VergilUa/xPooling/issues), or at [Unity forum](https://forum.unity.com/threads/free-zpooling-code-driven-pooling-framework.812145/)
+#### Suggestions or questions? Ask them at the issue section [here](https://github.com/VergilUa/xPooling/issues), or at [Unity forum](https://forum.unity.com/threads/free-xpooling-code-driven-pooling-framework.812145/)
 Feel free to fork and modify, license is MIT.
